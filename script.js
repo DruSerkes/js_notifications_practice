@@ -1,6 +1,7 @@
 const notificationButton = document.querySelector('#notification-button');
 let secondsAway = 0;
 let interval;
+let notification;
 
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -18,11 +19,10 @@ const addNotification = () => {
 
 const handleNavigateAway = () => {
   const initialTime = new Date();
-
   if (document.visibilityState === 'hidden') {
     interval = setInterval(() => {
       secondsAway = Math.floor((new Date() - initialTime) / 1000);
-      new Notification(`Don't leave!`, {
+      notification = new Notification(`Don't leave!`, {
         body: `You've been gone ${secondsAway} seconds...`,
         tag: 'The Tag You Want',
         requireInteraction: true,
@@ -30,6 +30,7 @@ const handleNavigateAway = () => {
     }, 100);
   } else {
     if (interval) clearInterval(interval);
+    if (notification) notification.close();
   };
 };
 
