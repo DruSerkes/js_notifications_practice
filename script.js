@@ -11,10 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
 const addNotification = () => {
   if (Notification.permission !== 'granted') return;
 
-  new Notification('Hey There Bud!', {
+  const notification = new Notification('Hey There Bud!', {
     body: 'Where you going?',
     vibrate: true
   });
+
+  setTimeout(() => notification.close(), 5000);
 };
 
 const handleNavigateAway = () => {
