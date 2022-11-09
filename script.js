@@ -1,6 +1,5 @@
 const notificationButton = document.querySelector('#notification-button');
 let secondsAway = 0;
-let initialTime = new Date();
 let interval;
 
 
@@ -12,8 +11,27 @@ const addNotification = () => {
   if (Notification.permission !== 'granted') return;
 
   new Notification('Hey There Bud!', {
-    body: 'Where you going?'
+    body: 'Where you going?',
+    vibrate: true
   });
 };
 
-notificationButton.addEventListener('click', addNotification)
+const handleNavigateAway = () => {
+  const initialTime = new Date();
+
+  if (document.visibilityState === 'hidden') {
+    interval = setInterval(() => {
+      secondsAway = Math.floor((new Date() - initialTime) / 1000);
+      new Notification(`Don't leave!`, {
+        body: `You've been gone ${secondsAway} seconds...`,
+        tag: 'The Tag You Want',
+        requireInteraction: true,
+      })
+    }, 100);
+  } else {
+    if (interval) clearInterval(interval);
+  };
+};
+
+notificationButton.addEventListener('click', addNotification);
+document.addEventListener('visibilitychange', handleNavigateAway);
