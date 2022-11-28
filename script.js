@@ -36,5 +36,5 @@ const handleNavigateAway = () => {
   };
 };
 
-notificationButton.addEventListener('click', addNotification);
+notificationButton.addEventListener('pointerdown', addNotification);
 document.addEventListener('visibilitychange', handleNavigateAway);
